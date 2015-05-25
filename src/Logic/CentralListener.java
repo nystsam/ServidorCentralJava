@@ -27,7 +27,8 @@ public class CentralListener extends Thread {
                 so = ss.accept();
                 System.out.println( "Conexión recibida de: " +  so.getInetAddress().getHostAddress());
                 
-                // Atender solicitud 
+                // Atender solicitud
+                
 
             }
         }catch(Exception e ){

@@ -5,5 +5,6 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <Sucursal>
-  
+  <Sucursal Name="Su1" Ip="192.168.1.131" Port="9500" />
+  <Sucursal Name="Su2" Ip="192.168.1.139" Port="9500" />
 </Sucursal>

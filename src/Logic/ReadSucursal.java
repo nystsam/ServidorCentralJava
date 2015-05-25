@@ -79,7 +79,7 @@ public class ReadSucursal {
                     if(this.saveSucursal(name, ip, port)){
                         
                         // Ajusta el ip vecino de la sucursal anterior
-                        UpdateNeighborSucursal updater = new UpdateNeighborSucursal(ip, Integer.parseInt(port));
+                        UpdateNeighborSucursal updater = new UpdateNeighborSucursal(ip, port, lastSucursal);
                         updater.start();
                         
                         return firstSucursal;

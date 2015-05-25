@@ -17,12 +17,14 @@ import java.util.logging.Logger;
  */
 public class UpdateNeighborSucursal extends Thread {
     
-    private final String ip;
-    private final int port;
+    private final String nextIp;
+    private final String nextPort;
+    private final String [] previousSucursal;
 
-    public UpdateNeighborSucursal(String ip, int port) {
-        this.ip = ip;
-        this.port = port;
+    public UpdateNeighborSucursal(String ip, String port, String [] previousSucursal) {
+        this.nextIp = ip;
+        this.nextPort = port;
+        this.previousSucursal = previousSucursal;
     }
     
     @Override
@@ -31,10 +33,10 @@ public class UpdateNeighborSucursal extends Thread {
             Socket so;
         try {
             
-            so = new Socket(this.ip, this.port);
+            so = new Socket(this.previousSucursal[1], Integer.parseInt(this.previousSucursal[2]));
             DataOutputStream output = new DataOutputStream(so.getOutputStream());
             
-            output.writeUTF("0 "+this.ip+" "+this.port);
+            output.writeUTF("0 "+this.nextIp+" "+this.nextPort);
             output.flush();
             
             so.close();

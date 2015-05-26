@@ -36,8 +36,10 @@ public class UpdateNeighborSucursal extends Thread {
             so = new Socket(this.previousSucursal[1], Integer.parseInt(this.previousSucursal[2]));
             DataOutputStream output = new DataOutputStream(so.getOutputStream());
             
-            output.writeUTF("0 "+this.nextIp+" "+this.nextPort);
+            output.writeUTF("0 " +this.nextIp+" "+this.nextPort);
             output.flush();
+            
+            Util.addText(this.previousSucursal[0] + " tiene nuevo vecino: "+ this.nextIp);
             
             so.close();
             

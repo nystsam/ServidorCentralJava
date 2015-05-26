@@ -46,6 +46,8 @@ public class SucursalRequest extends Thread {
                     ReadSucursal finder = new ReadSucursal();
                     sendResponse = finder.findSucursal(sucursalRequest[1], this.so.getInetAddress().getHostAddress(), sucursalRequest[2]);
                     
+                    Util.addText(sucursalRequest[1] + " ha sido agregada al anillo");
+                    
                     break;
                 // Fin Saludo de una sucursal    
             }

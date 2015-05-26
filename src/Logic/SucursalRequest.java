@@ -49,7 +49,16 @@ public class SucursalRequest extends Thread {
                     Util.addText(sucursalRequest[1] + " ha sido agregada al anillo");
                     
                     break;
-                // Fin Saludo de una sucursal    
+                // Fin Saludo de una sucursal  
+                
+                    
+                case "1":
+                    
+                    UpdateNeighborSucursal updater = new UpdateNeighborSucursal();
+                    sendResponse = updater.getSucursales(this.so.getInetAddress().getHostAddress());
+                    break;
+                    
+                // Fin Ip vecino    
             }
             
         

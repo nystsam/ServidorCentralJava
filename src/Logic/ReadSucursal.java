@@ -50,7 +50,7 @@ public class ReadSucursal {
                 
                 if(this.saveSucursal(name, ip, port)){
                 
-                    nextIpPort = ip+" "+port+" "+name;
+                    nextIpPort ="0 "+ ip+" "+port+" "+name;
                 }
             }
             else{
@@ -64,8 +64,9 @@ public class ReadSucursal {
                     lastSucursal[1] = child.getAttributeValue("Ip");
                     lastSucursal[2] = child.getAttributeValue("Port"); 
 
-                    if(lastSucursal[0] != null && lastSucursal[0].equals(name)) 
-                        alredyExist = true;  
+                    if(lastSucursal[1] != null && lastSucursal[1].equals(ip)) {
+                        alredyExist = true;
+                    }  
                    
                     if(pos == 0){
                         firstSucursal = lastSucursal[1]+" "+lastSucursal[2]+" "+lastSucursal[0];
@@ -98,16 +99,6 @@ public class ReadSucursal {
         return nextIpPort;
         
     }
-    
-    private String sendNextSucursal(){
-    
-        String nextIpPort = "";
-        
-        
-        
-        return nextIpPort;
-    }
-    
     
     private boolean saveSucursal(String name, String ip, String port){
         

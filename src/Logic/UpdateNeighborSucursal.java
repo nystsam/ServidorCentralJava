@@ -8,8 +8,12 @@ package Logic;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.input.SAXBuilder;
 
 /**
  * AJUSTA EL IP VECINO DE LA SUCURSAL ANTERIOR
@@ -17,15 +21,21 @@ import java.util.logging.Logger;
  */
 public class UpdateNeighborSucursal extends Thread {
     
-    private final String nextIp;
-    private final String nextPort;
-    private final String [] previousSucursal;
+    private String nextIp;
+    private String nextPort;
+    private String [] previousSucursal;
+    private int size;
 
+    public UpdateNeighborSucursal(){
+        
+    }
+    
     public UpdateNeighborSucursal(String ip, String port, String [] previousSucursal) {
         this.nextIp = ip;
         this.nextPort = port;
         this.previousSucursal = previousSucursal;
     }
+    
     
     @Override
     public void run(){
@@ -36,13 +46,14 @@ public class UpdateNeighborSucursal extends Thread {
             so = new Socket(this.previousSucursal[1], Integer.parseInt(this.previousSucursal[2]));
             DataOutputStream output = new DataOutputStream(so.getOutputStream());
             
-            output.writeUTF("0 " +this.nextIp+" "+this.nextPort);
+            output.writeUTF("0 "+this.nextIp+" "+this.nextPort);
             output.flush();
             
             Util.addText(this.previousSucursal[0] + " tiene nuevo vecino: "+ this.nextIp);
             
             so.close();
             
+            this.updateSucursalList();
         
         } catch (IOException ex) {
             Logger.getLogger(UpdateNeighborSucursal.class.getName()).log(Level.SEVERE, null, ex);
@@ -50,4 +61,92 @@ public class UpdateNeighborSucursal extends Thread {
             
     }
     
+    private void updateSucursalList(){
+        
+        Document doc;
+        Element root,child;
+        List <Element> rootChildrens;
+        
+        int pos = 0;
+        SAXBuilder builder = new SAXBuilder();
+
+        try
+        {
+          
+            doc = builder.build("src/XmlFiles/Sucursales.xml");
+            root = doc.getRootElement();
+            rootChildrens = root.getChildren();
+            Socket so;
+            
+                while (pos < rootChildrens.size()-1){
+
+                    child = rootChildrens.get(pos);
+                    String ip = child.getAttributeValue("Ip");
+                    String port = child.getAttributeValue("Port");
+                    
+                    String list = this.getSucursales(ip).split(" ")[1];
+                    
+                    so = new Socket(ip, Integer.parseInt(port));
+                    DataOutputStream output = new DataOutputStream(so.getOutputStream());
+
+                    output.writeUTF("1 "+list);
+                    output.flush();
+
+                    Util.addText(ip + " se le envió nueva lista de sucursales");
+
+                    so.close();
+                    
+                    pos++;
+                }
+
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        
+    }
+    
+    public String getSucursales(String ip){
+        
+        Document doc;
+        Element root,child;
+        List <Element> rootChildrens;
+        
+        String ipLists = "";
+        String success = "0 ";
+        int pos = 0;
+        SAXBuilder builder = new SAXBuilder();
+
+        try
+        {
+          
+            doc = builder.build("src/XmlFiles/Sucursales.xml");
+            root = doc.getRootElement();
+            rootChildrens = root.getChildren();
+                
+                while (pos < rootChildrens.size()){
+
+                    child = rootChildrens.get(pos);
+                    String newIp = child.getAttributeValue("Ip");
+                    String newPort = child.getAttributeValue("Port");
+                    
+                    if(!ip.equals(newIp)) {
+                        
+                        ipLists = ipLists + newIp+"!"+newPort+"@";
+                        success = "1 ";
+                    } 
+     
+                    pos++;
+                }
+
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        
+        return success+ipLists;
+        
+    }
 }

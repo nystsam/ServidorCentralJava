@@ -58,7 +58,7 @@ public class ReadSucursal {
                 String firstSucursal = "";
                 
                 while (pos < rootChildrens.size() && !alredyExist){
-
+                    
                     child = rootChildrens.get(pos);
                     lastSucursal[0] = child.getAttributeValue("Name");
                     lastSucursal[1] = child.getAttributeValue("Ip");

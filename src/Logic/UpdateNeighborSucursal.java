@@ -58,6 +58,11 @@ public class UpdateNeighborSucursal extends Thread {
         } catch (IOException ex) {
             Logger.getLogger(UpdateNeighborSucursal.class.getName()).log(Level.SEVERE, null, ex);
         }
+          catch(Exception e){
+              
+            System.out.println("Error al establecer conexion");  
+          }
+        
             
     }
     

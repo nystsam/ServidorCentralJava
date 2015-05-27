@@ -7,4 +7,5 @@ and open the template in the editor.
 <Sucursal>
   <Sucursal Name="Su1" Ip="192.168.55.454" Port="9700" />
   <Sucursal Name="Su1" Ip="192.168.3.179" Port="9700" />
+  <Sucursal Name="Su1" Ip="192.168.4.45" Port="9700" />
 </Sucursal>

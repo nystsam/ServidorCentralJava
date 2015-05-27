@@ -152,6 +152,65 @@ public class UpdateNeighborSucursal extends Thread {
         }
         
         return success+ipLists;
-        
+            
     }
+    
+    public String getVecinos(String ip){
+           
+        Document doc;
+        Element root,child;
+        List <Element> rootChildrens;
+        
+        String ipPuertoVecino = "";
+        int pos = 0;
+        SAXBuilder builder = new SAXBuilder();
+
+        try
+        {
+            boolean conseguido = false;
+            String respaldo = "";
+            doc = builder.build("src/XmlFiles/Sucursales.xml");
+            root = doc.getRootElement();
+            rootChildrens = root.getChildren();
+                
+                while (pos < rootChildrens.size()){
+
+                    child = rootChildrens.get(pos);
+                    String newIp = child.getAttributeValue("Ip");
+                    String newPort = child.getAttributeValue("Port");
+                    
+                    if(pos == 0){
+                        respaldo = newIp+"@"+newPort;
+                    }
+                    
+                    if(conseguido){
+                        
+                        ipPuertoVecino = newIp+"@"+newPort;
+                        
+                    }
+                    else{
+                        if(ip.equals(newIp)) {
+                            conseguido = true;         
+                        } 
+                    } 
+                    pos++;
+                }
+                
+                if(!conseguido || !ipPuertoVecino.equals("")) {
+                    ipPuertoVecino = respaldo;
+                }
+                
+                return "2 " + ipPuertoVecino;
+
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        
+        
+        return ipPuertoVecino;
+        
+    }  
+    
 }

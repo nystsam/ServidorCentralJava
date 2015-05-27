@@ -58,7 +58,13 @@ public class SucursalRequest extends Thread {
                     sendResponse = updater.getSucursales(this.so.getInetAddress().getHostAddress());
                     break;
                     
-                // Fin Ip vecino    
+                // Fin Ip vecino
+                    
+                case "2":
+                    
+                    UpdateNeighborSucursal vecinos = new UpdateNeighborSucursal();
+                    sendResponse = vecinos.getVecinos(this.so.getInetAddress().getHostAddress());
+                    break;
             }
             
         

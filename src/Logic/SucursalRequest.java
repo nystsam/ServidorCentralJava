@@ -62,6 +62,7 @@ public class SucursalRequest extends Thread {
                     
                 case "2":
                     
+                    Util.addText("Solicitud de reconocimiento de vecino");
                     UpdateNeighborSucursal vecinos = new UpdateNeighborSucursal();
                     sendResponse = vecinos.getVecinos(this.so.getInetAddress().getHostAddress());
                     break;

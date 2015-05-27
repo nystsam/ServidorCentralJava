@@ -196,11 +196,11 @@ public class UpdateNeighborSucursal extends Thread {
                     pos++;
                 }
                 
-                if(!conseguido || !ipPuertoVecino.equals("")) {
+                if(conseguido && ipPuertoVecino.equals("")) {
                     ipPuertoVecino = respaldo;
                 }
                 
-                return "2 " + ipPuertoVecino;
+                return ipPuertoVecino;
 
         }
         catch(Exception e)
